@@ -1,0 +1,17 @@
+{
+    "contents" : "library(\"ggplot2\")\n\nresults <- read.csv(\"../diophantine.csv\")\nresults <- data.matrix(results)\n\n# To avoid performing equality checks on floating point values, scale all results up to the > 1 range\nresults <- results * 100\n\nx <- seq(20, 49, 2)\ny <- seq(10, 49, 2)\n\nfun <- function(x, y) {\n    value <- results[((results[,1]<x+1) & (results[,1]>x-1)) & ((results[,2]<y+1) & (results[,2]>y-1))][3]\n    value <- if (is.na(value)) 0 else value\n    # Scale value back down to original\n    value / 100\n}\nVecFun <- Vectorize(fun)\ncolor <- rgb(180,160,100, maxColorValue=255)\n\npng('genetic_large.png', bg=\"transparent\", width=600, height=600)\nplot <- persp(x = x, y = y, z = outer(x, y, VecFun), phi = 25, theta = 45, ticktype=\"detailed\", col=color, shade=.05,\n      xlab = \"Mutation Factor (%)\", ylab = \"Survival Rate (%)\", zlab = \"Search Time (ms)\"\n)\nplot\ndev.off()",
+    "created" : 1444421027374.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "860911881",
+    "id" : "52B286D",
+    "lastKnownWriteTime" : 1444498838,
+    "path" : "~/Projects/Transpaygo/diophantine/src/main/resources/analysis/analysis.R",
+    "project_path" : "analysis.R",
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "source_on_save" : false,
+    "type" : "r_source"
+}
